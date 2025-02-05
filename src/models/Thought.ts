@@ -1,42 +1,32 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, ObjectId } from 'mongoose';
 
 import Comment from './Comment';
 
 interface IThought extends Document {
-    author: string,
-    content: string,
-    createdAt: Date,
-    comments: typeof Comment[]
+    _id: ObjectId;
+    text?: string;
+    username?: string;
+    comments?: Comment[];
 };
 
 const thoughtSchema = new Schema<IThought>(
     {
-        author: {
-            type: String,
-            default: 'USER_DEFAULT'
-        },
-        content: {
-            type: String,
-            default: 'CONTENT DEFAULT'
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now
-        },
-        comments: [Comment],
-    },
-    {
+        text: String,
+        username: String,
+        comments: [{ type: [Comment], ref: 'comment' }],
+      },
+      {
         toJSON: {
-            virtuals: true,
+          virtuals: true,
         },
         id: false,
-    }
+      }
 );
 
 thoughtSchema
-    .virtual('getResponses')
+    .virtual('totalComments')
     .get(function () {
-        return this.comments.length;
+        return this.comments?.length;
     });
 
 const Thought = model('thought', thoughtSchema)

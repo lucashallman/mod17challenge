@@ -1,7 +1,8 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, ObjectId } from 'mongoose';
 import Thought from './Thought';
 
 interface IUser extends Document {
+    _id: ObjectId,
     username: string;
     thoughts: typeof Thought[],
     friends: String[]
