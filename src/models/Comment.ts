@@ -1,25 +1,15 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, ObjectId } from 'mongoose';
 
 interface IComment extends Document {
-    author: string,
-    content: string,
-    createdAt: Date,
+    _id: ObjectId;
+    text?: string;
+    username?: string;
 }
 
 const commentSchema = new Schema<IComment>(
     {
-        author: {
-            type: String,
-            default: 'USER_DEFAULT',
-        },
-        content: {
-            type: String,
-            default: 'CONTENT DEFAULT'
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-        }
+        text: String,
+        username: String,
     }
 );
 
