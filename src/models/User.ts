@@ -1,5 +1,5 @@
 import { Schema, model, Document, ObjectId } from 'mongoose';
-import Thought from './Thought';
+import Thought from './Thought.js';
 
 interface IUser extends Document {
     _id: ObjectId,

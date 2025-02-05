@@ -1,5 +1,5 @@
-import Thought from "./Thought";
-import Comment from "./Comment";
-import User from "./User";
+import Thought from "./Thought.js";
+import Comment from "./Comment.js";
+import User from "./User.js";
 
 export { Thought, Comment, User };

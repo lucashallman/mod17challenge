@@ -1,19 +1,17 @@
 import { Schema, model, Document, ObjectId } from 'mongoose';
 
-import Comment from './Comment';
-
 interface IThought extends Document {
     _id: ObjectId;
     text?: string;
     username?: string;
-    comments?: Comment[];
+    comments?: string[];
 };
 
 const thoughtSchema = new Schema<IThought>(
     {
         text: String,
         username: String,
-        comments: [{ type: [Comment], ref: 'comment' }],
+        comments: [{ type: String, ref: 'comment' }],
       },
       {
         toJSON: {
