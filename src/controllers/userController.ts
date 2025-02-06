@@ -12,8 +12,8 @@ export const getUsers = async (_req: Request, res: Response) => {
 };
 
 export const getSingleUser = async (req: Request, res: Response) => {
-    try {
-        const user = await User.findOne({ _id: req.params.id });
+    try { 
+        const user = await User.findOne({ _id: req.body.userID });
         res.json(user);
     } catch (err) {
         res.status(500).json(err);
@@ -29,3 +29,61 @@ export const createUser = async (req: Request, res: Response) => {
         res.status(500).json(err);
     }
 };
+
+//updating comments
+
+export const updateUser = async (req: Request, res: Response) => {
+    try {
+        if (req.params.type == 'username') {
+
+            await User.findOneAndUpdate (
+                { _id: req.body.userID },
+                { username: req.body.newUsername }
+            )
+
+        } else if (req.params.type === 'addFriend') {
+
+            await User.findOneAndUpdate(
+                { _id: req.body.userID },
+                { $push: { friends: req.body.friendID} },
+                { new: true }
+            )
+
+        } else if (req.params.type === 'removeFriend') {
+            const exfriend = req.body.friendID
+            const user = await User.findOne(req.body.userID);
+
+            if (user) {
+                const friendsList = user.friends;
+                for (let i = 0; i < friendsList.length; i++) {
+                    if (friendsList[i] === exfriend) {
+                        const newList = friendsList.splice(i, 1)
+                        await User.findOneAndUpdate(
+                            {_id: req.body.userID},
+                            {friends: newList}
+                        )
+                        res.json({ message: 'Friend removed.'})
+                    }
+                }
+            }
+        }
+    //   await User.findOneAndUpdate(
+    //     { _id: req.body.userID },
+    //     { text: req.body.newText }
+    //   )
+    //   res.json({ message: 'User updated' });
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  };
+  
+  //deleting comments
+  
+  export const deleteUser = async (req: Request, res: Response) => {
+    try {
+      await User.deleteOne({ _id: req.body.userId });
+      res.json({ message: 'Comment deleted.' });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }

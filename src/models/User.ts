@@ -1,10 +1,9 @@
 import { Schema, model, Document, ObjectId } from 'mongoose';
-import Thought from './Thought.js';
 
 interface IUser extends Document {
     _id: ObjectId,
     username: string;
-    thoughts: typeof Thought[],
+    thoughts: ObjectId[],
     friends: String[]
 }
 
@@ -14,7 +13,7 @@ const userSchema = new Schema<IUser>(
             type: String,
             default: 'USERNAME_DEFAULT'
         },
-        thoughts: [Thought],
+        thoughts: [Schema.Types.ObjectId],
         friends: [String],
     }
 )
