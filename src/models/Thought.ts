@@ -3,14 +3,17 @@ import { Schema, model, Document, ObjectId } from 'mongoose';
 interface IThought extends Document {
     _id: ObjectId;
     text?: string;
-    username?: string;
+    username: string;
     comments?: string[];
 };
 
 const thoughtSchema = new Schema<IThought>(
     {
         text: String,
-        username: String,
+        username: {
+          type: String,
+          default: 'USER_DEFAULT',
+        },
         comments: [{ type: String, ref: 'comment' }],
       },
       {
