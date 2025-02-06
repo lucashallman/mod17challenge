@@ -12,7 +12,7 @@ const thoughtSchema = new Schema<IThought>(
         text: String,
         username: {
           type: String,
-          default: 'USER_DEFAULT',
+          default: 'USER_DEFAULT'
         },
         comments: [{ type: String, ref: 'comment' }],
       },
