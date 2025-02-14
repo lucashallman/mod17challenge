@@ -14,7 +14,7 @@ export const getThoughts = async (_req: Request, res: Response) => {
 
 export const getSingleThought = async (req: Request, res: Response) => {
     try {
-        const thought = await Thought.findOne({_id: req.params.thoughtId });
+        const thought = await Thought.findById(req.params.thoughtId);
 
         if (!thought) {
             res.status(404).json({ message: 'No Thought with that id'});
@@ -43,7 +43,7 @@ export const createThought = async (req: Request, res: Response) => {
 export const updateThought = async (req: Request, res: Response) => {
     try {
       await Thought.findOneAndUpdate(
-        { _id: req.body.commentID },
+        { _id: req.body.thoughtID },
         { text: req.body.newText }
       )
       res.json({ message: 'Thought updated' });
