@@ -14,7 +14,7 @@ export const getComments = async (_req: Request, res: Response) => {
 
 export const getSingleComment = async (req: Request, res: Response) => {
   try {
-    const comment = await Comment.findOne({ _id: req.params.commentId });
+    const comment = await Comment.findById(req.params.commentId);
 
     if (!comment) {
       res.status(404).json({ message: 'No comment found with that id' });

@@ -13,7 +13,7 @@ export const getUsers = async (_req: Request, res: Response) => {
 
 export const getSingleUser = async (req: Request, res: Response) => {
     try { 
-        const user = await User.findOne({ _id: req.body.userID });
+        const user = await User.findById(req.params.userId);
         res.json(user);
     } catch (err) {
         res.status(500).json(err);
@@ -30,7 +30,7 @@ export const createUser = async (req: Request, res: Response) => {
     }
 };
 
-//updating comments
+//updating user
 
 export const updateUser = async (req: Request, res: Response) => {
     try {
@@ -77,7 +77,7 @@ export const updateUser = async (req: Request, res: Response) => {
     }
   };
   
-  //deleting comments
+  //deleting user
   
   export const deleteUser = async (req: Request, res: Response) => {
     try {
